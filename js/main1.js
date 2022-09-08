@@ -1,13 +1,13 @@
 const productos = [
-  { nombre: "FIFA 23", precio: 7499 },
-  { nombre: "GRAN TURISMO 7", precio: 6799 },
-  { nombre: "GTA V", precio: 1399 },
-  { nombre: "ELDEN RING", precio: 6799 },
-  { nombre: "NBA 2K23", precio: 6799 },
-  { nombre: "GOD OF WAR RAGNAROK", precio: 6799 },
-  { nombre: "F1 22", precio: 5999 },
-  { nombre: "RED DEAD REDEMPTION 2", precio: 6099 },
-  { nombre: "THE LAST OF US PART I REMAKE", precio: 8399 },
+  { id: 1, nombre: "FIFA 23", precio: 7499 },
+  { id: 2, nombre: "GRAN TURISMO 7", precio: 6799 },
+  { id: 3, nombre: "GTA V", precio: 1399 },
+  { id: 4, nombre: "ELDEN RING", precio: 6799 },
+  { id: 5, nombre: "NBA 2K23", precio: 6799 },
+  { id: 6, nombre: "GOD OF WAR RAGNAROK", precio: 6799 },
+  { id: 7, nombre: "F1 22", precio: 5999 },
+  { id: 8, nombre: "RED DEAD REDEMPTION 2", precio: 6099 },
+  { id: 9, nombre: "THE LAST OF US PART I REMAKE", precio: 8399 },
 ];
 
 let carrito = [];
@@ -24,7 +24,8 @@ while (seleccion != "si" && seleccion != "no") {
 if (seleccion == "si") {
   alert("A continuación nuestra lista de juegos📜");
   let todosLosProductos = productos.map(
-    (producto) => producto.nombre + ": " + "$" + producto.precio
+    (producto) =>
+      producto.id + ") " + producto.nombre + ": " + "$" + producto.precio
   );
   alert(todosLosProductos.join("\n"));
 } else if (seleccion == "no") {
@@ -32,46 +33,56 @@ if (seleccion == "si") {
 }
 
 while (seleccion != "no") {
-  let producto = prompt("Agregue un juego al carrito 🛒");
+  let producto = prompt("Agregue un juego al carrito indicando su número 🛒");
   let precio = 0;
+  let nombre;
 
   if (
-    producto == "FIFA 23" ||
-    producto == "GRAN TURISMO 7" ||
-    producto == "GTA V" ||
-    producto == "ELDEN RING" ||
-    producto == "NBA 2K23" ||
-    producto == "GOD OF WAR RAGNAROK" ||
-    producto == "F1 22" ||
-    producto == "RED DEAD REDEMPTION 2" ||
-    producto == "THE LAST OF US PART I REMAKE"
+    producto == "1" ||
+    producto == "2" ||
+    producto == "3" ||
+    producto == "4" ||
+    producto == "5" ||
+    producto == "6" ||
+    producto == "7" ||
+    producto == "8" ||
+    producto == "9"
   ) {
     switch (producto) {
-      case "FIFA 23":
+      case "1":
+        nombre = "FIFA 23";
         precio = 7499;
         break;
-      case "GRAN TURISMO 7":
+      case "2":
+        nombre = "GRAN TURISMO 7";
         precio = 6799;
         break;
-      case "GTA V":
+      case "3":
+        nombre = "GTA V";
         precio = 1399;
         break;
-      case "ELDEN RING":
+      case "4":
+        nombre = "ELDEN RING";
         precio = 6799;
         break;
-      case "NBA 2K23":
+      case "5":
+        nombre = "NBA 2K23";
         precio = 6799;
         break;
-      case "GOD OF WAR RAGNAROK":
+      case "6":
+        nombre = "GOD OF WAR RAGNAROK";
         precio = 6799;
         break;
-      case "F1 22":
+      case "7":
+        nombre = "F1 22";
         precio = 5999;
         break;
-      case "RED DEAD REDEMPTION 2":
+      case "8":
+        nombre = "RED DEAD REDEMPTION 2";
         precio = 6099;
         break;
-      case "THE LAST OF US PART I REMAKE":
+      case "9":
+        nombre = "THE LAST OF US PART 1 REMAKE";
         precio = 8399;
         break;
       default:
@@ -79,7 +90,7 @@ while (seleccion != "no") {
     }
     let unidades = parseInt(prompt("¿Cuantas unidades desea llevar?"));
 
-    carrito.push({ producto, unidades, precio });
+    carrito.push({ producto, nombre, unidades, precio });
     console.log(carrito);
   } else {
     alert("Disculpa, no contamos con ese producto 😢");
@@ -91,7 +102,7 @@ while (seleccion != "no") {
     alert("Gracias por su compra! Hasta luego 😊");
     carrito.forEach((carritoFinal) => {
       console.log(
-        carritoFinal.producto +
+        carritoFinal.nombre +
           " x " +
           carritoFinal.unidades +
           " = " +
