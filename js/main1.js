@@ -32,6 +32,9 @@ if (seleccion == "si") {
   alert("Gracias por visitarnos, esperamos vuelva pronto!");
 }
 
+let filtroMenorPrecio = productos.filter((el) => el.precio < 6000);
+console.log(filtroMenorPrecio);
+
 while (seleccion != "no") {
   let producto = prompt("Agregue un juego al carrito indicando su número 🛒");
   let precio = 0;
