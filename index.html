@@ -5,13 +5,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./css/style.css" />
-    <title>Document</title>
+    <title>PlayStation Store 🎮</title>
   </head>
   <body>
-    <h1>PlayStation Store: Los mejores juegos estan acá</h1>
-    <section>
-      <ul id="lista"></ul>
-    </section>
+    <h1>PlayStation Store</h1>
+
+    <h2>Bienvenido a la mejor tienda virtual de juegos</h2>
+    <input type="text" id="nombre" placeholder="ingresa tu nombre" />
+    <input type="text" id="apellido" placeholder="ingresa tu apellido" />
+    <button id="btnEnviar">Enviar</button>
+
+    <h2 id="h2"></h2>
+
+    <div>
+      <h3>Productos</h3>
+      <article id="productos" class="containerProductos"></article>
+
+      <h3>Compras</h3>
+      <article id="compras" class="containerProductos"></article>
+      <h3 id="total"></h3>
+    </div>
+    <script src="./js/main1.js"></script>
   </body>
-  <script src="./js/main1.js"></script>
 </html>

@@ -1,3 +1,9 @@
+.containerProductos {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 50px;
+}
+
 .card {
   margin: 20px;
   padding: 10px;
