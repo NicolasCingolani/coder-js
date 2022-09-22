@@ -27,116 +27,7 @@ const productos = [
 ];
 
 //Array de carrito vacío
-let carrito = [];
-
-// //Prompt bienvenida
-// let seleccion = prompt(
-//   "Bienvenido a PlayStation Store. ¿Desea comprar algún juego? \nIndique si o no"
-// );
-
-// while (seleccion != "si" && seleccion != "no") {
-//   alert("Por favor ingrese si o no");
-//   seleccion = prompt("¿Desea comprar un juego si o no?");
-// }
-
-// //.map para recorrer y mostrar porductos del array
-// if (seleccion == "si") {
-//   alert("A continuación nuestra lista de juegos📜");
-//   let todosLosProductos = productos.map(
-//     (producto) =>
-//       producto.id + ") " + producto.nombre + ": " + "$" + producto.precio
-//   );
-//   alert(todosLosProductos.join("\n"));
-// } else if (seleccion == "no") {
-//   alert("Gracias por visitarnos, esperamos vuelva pronto!");
-// }
-
-// //.filter para filtar por precio
-// let filtroMenorPrecio = productos.filter((el) => el.precio < 6000);
-// console.log(filtroMenorPrecio);
-
-// //Ciclo while + swith para seleccionar el producto a comprar
-// while (seleccion != "no") {
-//   let producto = prompt("Agregue un juego al carrito indicando su número 🛒");
-//   let precio = 0;
-//   let nombre;
-
-//   if (
-//     producto == "1" ||
-//     producto == "2" ||
-//     producto == "3" ||
-//     producto == "4" ||
-//     producto == "5" ||
-//     producto == "6" ||
-//     producto == "7" ||
-//     producto == "8" ||
-//     producto == "9"
-//   ) {
-//     switch (producto) {
-//       case "1":
-//         nombre = "FIFA 23";
-//         precio = 7499;
-//         break;
-//       case "2":
-//         nombre = "GRAN TURISMO 7";
-//         precio = 6799;
-//         break;
-//       case "3":
-//         nombre = "GTA V";
-//         precio = 1399;
-//         break;
-//       case "4":
-//         nombre = "ELDEN RING";
-//         precio = 6799;
-//         break;
-//       case "5":
-//         nombre = "NBA 2K23";
-//         precio = 6799;
-//         break;
-//       case "6":
-//         nombre = "GOD OF WAR RAGNAROK";
-//         precio = 6799;
-//         break;
-//       case "7":
-//         nombre = "F1 22";
-//         precio = 5999;
-//         break;
-//       case "8":
-//         nombre = "RED DEAD REDEMPTION 2";
-//         precio = 6099;
-//         break;
-//       case "9":
-//         nombre = "THE LAST OF US PART 1 REMAKE";
-//         precio = 8399;
-//         break;
-//       default:
-//         break;
-//     }
-//     let unidades = parseInt(prompt("¿Cuantas unidades desea llevar?"));
-
-//     carrito.push({ producto, nombre, unidades, precio });
-//     console.log(carrito);
-//   } else {
-//     alert("Disculpa, no contamos con ese producto 😢");
-//   }
-
-//   seleccion = prompt("¿Desea seguir comprando? Indique si o no");
-
-//   //Ciclo while para finalizar compra y forEach para recorrer carrito
-//   while (seleccion === "no") {
-//     alert("Gracias por su compra! Hasta luego 😊");
-//     carrito.forEach((carritoFinal) => {
-//       console.log(
-//         carritoFinal.nombre +
-//           " x " +
-//           carritoFinal.unidades +
-//           " = " +
-//           carritoFinal.precio * carritoFinal.unidades
-//       );
-//     });
-//     break;
-//   }
-// }
+const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
 //Constantes
 const h2 = document.getElementById("h2");
@@ -145,7 +36,10 @@ const compras = document.getElementById("compras");
 const nomb = document.getElementById("nombre");
 const apell = document.getElementById("apellido");
 const btnEnviar = document.getElementById("btnEnviar");
+const btnBorrar = document.getElementById("btnBorrar");
+const checkbox = document.getElementById("checkbox");
 const precioTotal = document.getElementById("total");
+const finalizar = document.getElementById("finalizar");
 
 // Funcion agregar para cualquier array
 function cargar(array, objeto) {
@@ -164,7 +58,39 @@ btnEnviar.addEventListener("click", () => {
     " " +
     apellido +
     ". A continuación podrá realizar su compra";
+  if (checkbox.checked) {
+    setDatos("localStorage");
+  } else {
+    setDatos("sessionStorage");
+  }
 });
+
+btnBorrar.addEventListener("click", () => {
+  nomb.value = "";
+  apell.value = "";
+  localStorage.removeItem("cliente");
+});
+
+//local inicio
+function setDatos(valor) {
+  let cliente = { nombre: nomb.value, apellido: apell.value };
+  if (valor === "sessionStorage") {
+    sessionStorage.setItem("user", JSON.stringify(cliente));
+  }
+  if (valor === "localStorage") {
+    localStorage.setItem("cliente", JSON.stringify(cliente));
+  }
+  return cliente;
+}
+
+function getDatos(datos) {
+  if (datos) {
+    nomb.value = datos.nombre;
+    apell.value = datos.apellido;
+  }
+}
+
+getDatos(JSON.parse(localStorage.getItem("cliente")));
 
 // Cards de productos
 function cardsProductos() {
@@ -210,12 +136,13 @@ function mostrarCarrito() {
     let prodCarrito = document.createElement("div");
     prodCarrito.innerHTML = `<div class="card">
     <h3>${producto.nombre}</h3>
-    <p> $ ${producto.precio}</p>
+    <p> $ ${producto.precio * producto.cantidad}</p>
     <h3>CANTIDAD: ${producto.cantidad}</h3>
     <button class="btnCarrito" id="btn-borrar${producto.id}">Borrar</button>
     </div>`;
     compras.append(prodCarrito);
   }
+  localStorage.setItem("carrito", JSON.stringify(carrito));
   borrar();
   let precioTot;
   precioTot = carrito.reduce((acc, el) => acc + el.precio * el.cantidad, 0);
@@ -235,9 +162,19 @@ function borrar() {
   });
 }
 
+//finalizar
+function fin() {
+  finalizar.addEventListener("click", () => {
+    localStorage.removeItem("carrito");
+    for (let index = 0; index < carrito.length; index++) {
+      carrito.splice(index, carrito.length);
+    }
+    console.log("fin");
+    console.log(carrito);
+    mostrarCarrito();
+  });
+}
+
 mostrarCarrito();
 cardsProductos();
-
-// //.reduce para generar nuevo array con el total de la compra
-// const total = carrito.reduce((acc, el) => acc + el.precio * el.unidades, 0);
-// console.log("El total de su compra es: " + total);
+fin();

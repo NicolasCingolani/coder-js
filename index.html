@@ -11,19 +11,25 @@
     <h1>PlayStation Store</h1>
 
     <h2>Bienvenido a la mejor tienda virtual de juegos</h2>
-    <input type="text" id="nombre" placeholder="ingresa tu nombre" />
-    <input type="text" id="apellido" placeholder="ingresa tu apellido" />
-    <button id="btnEnviar">Enviar</button>
-
+    <div class="cardInput">
+      <input type="text" id="nombre" placeholder="Ingresa tu nombre" />
+      <input type="text" id="apellido" placeholder="Ingresa tu apellido" />
+      <label for="checkbox"
+        >Recordar<input type="checkbox" id="checkbox"
+      /></label>
+      <button id="btnEnviar">Enviar</button>
+      <button id="btnBorrar">Borrar</button>
+    </div>
     <h2 id="h2"></h2>
 
     <div>
-      <h3>Productos</h3>
+      <h3>Productos:</h3>
       <article id="productos" class="containerProductos"></article>
 
-      <h3>Compras</h3>
+      <h3>Compras:</h3>
       <article id="compras" class="containerProductos"></article>
       <h3 id="total"></h3>
+      <button id="finalizar">FINALIZAR COMPRA</button>
     </div>
     <script src="./js/main1.js"></script>
   </body>
