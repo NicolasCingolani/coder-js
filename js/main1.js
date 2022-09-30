@@ -38,8 +38,9 @@ const apell = document.getElementById("apellido");
 const btnEnviar = document.getElementById("btnEnviar");
 const btnBorrar = document.getElementById("btnBorrar");
 const checkbox = document.getElementById("checkbox");
-const precioTotal = document.getElementById("total");
+const precioTotal = document.querySelector(".total");
 const finalizar = document.getElementById("finalizar");
+const cancelar = document.getElementById("cancelar");
 
 // Funcion agregar para cualquier array
 function cargar(array, objeto) {
@@ -52,19 +53,31 @@ let apellido;
 btnEnviar.addEventListener("click", () => {
   nombre = nomb.value;
   apellido = apell.value;
-  h2.innerText =
-    "Hola " +
-    nombre +
-    " " +
-    apellido +
-    ". A continuación podrás realizar tu compra";
-  checkbox.checked ? setDatos("localStorage") : setDatos("sessionStorage");
+  if (nombre != "" && apellido != "") {
+    h2.innerText =
+      "Hola " +
+      nombre +
+      " " +
+      apellido +
+      ". A continuación podrás realizar tu compra";
+    checkbox.checked ? setDatos("localStorage") : setDatos("sessionStorage");
+  } else {
+    Swal.fire({
+      position: "top-and",
+      icon: "error",
+      title: "Los campos estan vacios",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  }
 });
 
 btnBorrar.addEventListener("click", () => {
   nomb.value = "";
   apell.value = "";
   localStorage.removeItem("cliente");
+  sessionStorage.removeItem("user");
+  h2.innerText = "Bienvenido";
 });
 
 //local inicio (uso and)
@@ -72,9 +85,16 @@ function setDatos(valor) {
   let cliente = { nombre: nomb.value, apellido: apell.value };
   valor === "sessionStorage" &&
     sessionStorage.setItem("user", JSON.stringify(cliente));
-  valor === "localStorage" &&
+  if (valor === "localStorage") {
     localStorage.setItem("cliente", JSON.stringify(cliente));
-
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Su nombre y apellido seran recordados!!!",
+      showConfirmButton: false,
+      timer: 1500,
+    });
+  }
   return cliente;
 }
 
@@ -93,10 +113,10 @@ function cardsProductos() {
     let { nombre, precio, img, id } = producto;
     let prod = document.createElement("div");
     prod.innerHTML = `<div class="card">
-    <h3>${id} - ${nombre}</h3>
+    <h4>${id} - ${nombre}</h4>
     <p> $ ${precio}</p>
     <img src="../img/${img}" alt="">
-    <button id="agregar${id}">Agregar</button>
+    <button id="agregar${id}" class="btnAgregar">Agregar</button>
     </div>`;
     stockProductos.append(prod);
   }
@@ -133,10 +153,10 @@ function mostrarCarrito() {
     let { nombre, precio, id, cantidad } = producto;
     let prodCarrito = document.createElement("div");
     prodCarrito.innerHTML = `<div class="card">
-    <h3>${nombre}</h3>
+    <h4>${nombre}</h4>
     <p> $ ${precio * cantidad}</p>
-    <h3>CANTIDAD: ${cantidad}</h3>
-    <button class="btnCarrito" id="btn-borrar${id}">Borrar</button>
+    <h5>CANTIDAD: ${cantidad}</h5>
+    <button class="btnCarrito btnBorrar" id="btn-borrar${id}">Borrar</button>
     </div>`;
     compras.append(prodCarrito);
   }
@@ -173,6 +193,51 @@ function fin() {
   });
 }
 
+//cancelar
+function cancel() {
+  cancelar.addEventListener("click", () => {
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton: "btn btn-success",
+        cancelButton: "btn btn-danger",
+      },
+      buttonsStyling: false,
+    });
+    swalWithBootstrapButtons
+      .fire({
+        title: "Estas seguro que quieres cancelar tu compra?",
+        text: "No podrás recuperar tu carrito",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Si, borrar!",
+        cancelButtonText: "No, cancelar!",
+        reverseButtons: true,
+      })
+      .then((result) => {
+        if (result.isConfirmed) {
+          swalWithBootstrapButtons.fire(
+            "BORRADO!",
+            "Su carrito fue vaciado.",
+            "success"
+          );
+          localStorage.removeItem("carrito");
+          for (let index = 0; index < carrito.length; index++) {
+            carrito.splice(index, carrito.length);
+          }
+          console.log(carrito);
+          mostrarCarrito();
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalWithBootstrapButtons.fire(
+            "CANCELADO",
+            "Puede continuar su compra 🛒",
+            "error"
+          );
+        }
+      });
+  });
+}
+
 mostrarCarrito();
 cardsProductos();
 fin();
+cancel();
