@@ -1,30 +1,17 @@
 //Array de productos
-const productos = [
-  { id: 1, nombre: "FIFA 23", precio: 7499, img: "fifa-23.jpg" },
-  { id: 2, nombre: "GRAN TURISMO 7", precio: 6799, img: "gran-turismo-7.jpg" },
-  { id: 3, nombre: "GTA V", precio: 1399, img: "gta-v.jpg" },
-  { id: 4, nombre: "ELDEN RING", precio: 6799, img: "elden-ring.jpg" },
-  { id: 5, nombre: "NBA 2K23", precio: 6799, img: "nba-2k23.jpg" },
-  {
-    id: 6,
-    nombre: "GOD OF WAR RAGNAROK",
-    precio: 6799,
-    img: "god-of-war-ragnarok.jpg",
-  },
-  { id: 7, nombre: "F1 22", precio: 5999, img: "f1-22.jpg" },
-  {
-    id: 8,
-    nombre: "RED DEAD REDEMPTION 2",
-    precio: 6099,
-    img: "red-dead-redemption.jpg",
-  },
-  {
-    id: 9,
-    nombre: "THE LAST OF US PART I REMAKE",
-    precio: 8399,
-    img: "the-last-of-us.jpg",
-  },
-];
+const productos = [];
+
+const inventario = async () => {
+  const response = await fetch("./js/productos.json");
+
+  const data = await response.json();
+  data.forEach((element) => {
+    productos.push(element);
+  });
+  cardsProductos(data);
+};
+
+inventario();
 
 //Array de carrito vacío (uso or)
 const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
