@@ -103,7 +103,7 @@ function cardsProductos() {
     <h4>${id} - ${nombre}</h4>
     <p> $ ${precio}</p>
     <img src="../img/${img}" alt="">
-    <button id="agregar${id}" class="btnAgregar">Agregar</button>
+    <button id="agregar${id}" class="btnAgregar bg-success">Agregar</button>
     </div>`;
     stockProductos.append(prod);
   }
@@ -143,7 +143,7 @@ function mostrarCarrito() {
     <h4>${nombre}</h4>
     <p> $ ${precio * cantidad}</p>
     <h5>CANTIDAD: ${cantidad}</h5>
-    <button class="btnCarrito btnBorrar" id="btn-borrar${id}">Borrar</button>
+    <button class="btnCarrito btnBorrar bg-danger" id="btn-borrar${id}">Borrar</button>
     </div>`;
     compras.append(prodCarrito);
   }
@@ -170,6 +170,12 @@ function borrar() {
 //finalizar
 function fin() {
   finalizar.addEventListener("click", () => {
+    Swal.fire({
+      icon: "success",
+      title: "Compra exitosa!!!",
+      text: "Su compra finalizo correctamente, esperamos volver a verlo pronto muchas gracias por su visita 😀",
+    });
+
     localStorage.removeItem("carrito");
     for (let index = 0; index < carrito.length; index++) {
       carrito.splice(index, carrito.length);

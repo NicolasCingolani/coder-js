@@ -19,6 +19,12 @@
   justify-content: space-around;
 }
 
+.centrado {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .card img {
   width: 100%;
   object-fit: cover;
@@ -46,6 +52,23 @@
 .btnAgregar {
   border-radius: 10px;
 }
+
+.btnAgregar:hover {
+  transform: scale(1.2);
+}
+
 .btnBorrar {
   border-radius: 10px;
+}
+
+.btnBorrar:hover {
+  transform: scale(1.2);
+}
+
+#btnEnviar:hover {
+  transform: scale(1.2);
+}
+
+#btnBorrar:hover {
+  transform: scale(1.2);
 }

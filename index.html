@@ -14,29 +14,37 @@
     <title>PlayStation Store 🎮</title>
   </head>
   <body>
-    <h1>PlayStation Store</h1>
+    <h1 class="bg-dark text-light text-center">PlayStation Store</h1>
 
-    <h2>Bienvenido a la mejor tienda virtual de juegos</h2>
-    <div class="cardInput">
-      <input type="text" id="nombre" placeholder="Ingresa tu nombre" />
-      <input type="text" id="apellido" placeholder="Ingresa tu apellido" />
-      <label for="checkbox"
-        >Recordar<input type="checkbox" id="checkbox"
-      /></label>
-      <button id="btnEnviar">Enviar</button>
-      <button id="btnBorrar">Borrar</button>
+    <h2 class="text-center">Bienvenido a la mejor tienda virtual de juegos</h2>
+    <div class="centrado">
+      <div class="cardInput">
+        <input type="text" id="nombre" placeholder="Ingresa tu nombre" />
+        <input type="text" id="apellido" placeholder="Ingresa tu apellido" />
+        <label for="checkbox"
+          >Recordar<input type="checkbox" id="checkbox"
+        /></label>
+        <button id="btnEnviar" class="bg-success mt-1 mb-1">Enviar</button>
+        <button id="btnBorrar" class="bg-danger">Borrar</button>
+      </div>
     </div>
     <h2 id="h2"></h2>
 
     <div>
-      <h3>Productos:</h3>
+      <h3 class="p">Productos:</h3>
       <article id="productos" class="containerProductos"></article>
 
       <h3>Compras:</h3>
       <article id="compras" class="containerProductos"></article>
       <h3 class="total"></h3>
-      <button id="finalizar" class="btnAgregar">FINALIZAR COMPRA</button>
-      <button id="cancelar" class="btnBorrar">CANCELAR COMPRA</button>
+      <div class="centrado">
+        <button id="finalizar" class="btnAgregar bg-success">
+          FINALIZAR COMPRA
+        </button>
+        <button id="cancelar" class="btnBorrar bg-danger">
+          CANCELAR COMPRA
+        </button>
+      </div>
     </div>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js"
